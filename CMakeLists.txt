@@ -209,7 +209,7 @@ endif()
 # OpenCV cmake options
 # ----------------------------------------------------------------------------
 
-OCV_OPTION(OPENCV_ENABLE_NONFREE "Enable non-free algorithms" OFF)
+OCV_OPTION(OPENCV_ENABLE_NONFREE "Enable non-free algorithms" ON)
 
 # 3rd party libs
 OCV_OPTION(OPENCV_FORCE_3RDPARTY_BUILD   "Force using 3rdparty code from source" OFF)
@@ -331,7 +331,7 @@ OCV_OPTION(WITH_PVAPI "Include Prosilica GigE support" OFF
 OCV_OPTION(WITH_ARAVIS "Include Aravis GigE support" OFF
   VISIBLE_IF NOT ANDROID AND NOT IOS AND NOT WINRT AND NOT WIN32
   VERIFY HAVE_ARAVIS_API)
-OCV_OPTION(WITH_QT "Build with Qt Backend support" OFF
+OCV_OPTION(WITH_QT "Build with Qt Backend support" ON
   VISIBLE_IF NOT ANDROID AND NOT IOS AND NOT WINRT
   VERIFY HAVE_QT)
 OCV_OPTION(WITH_WIN32UI "Build with Win32 UI Backend support" ON
@@ -456,8 +456,8 @@ OCV_OPTION(BUILD_ANDROID_EXAMPLES   "Build examples for Android platform"       
 OCV_OPTION(BUILD_DOCS               "Create build rules for OpenCV Documentation" OFF  IF (NOT WINRT AND NOT APPLE_FRAMEWORK))
 OCV_OPTION(BUILD_EXAMPLES           "Build all examples"                          OFF )
 OCV_OPTION(BUILD_PACKAGE            "Enables 'make package_source' command"       ON  IF NOT WINRT)
-OCV_OPTION(BUILD_PERF_TESTS         "Build performance tests"                     NOT INSTALL_CREATE_DISTRIB  IF (NOT APPLE_FRAMEWORK) )
-OCV_OPTION(BUILD_TESTS              "Build accuracy & regression tests"           NOT INSTALL_CREATE_DISTRIB  IF (NOT APPLE_FRAMEWORK) )
+OCV_OPTION(BUILD_PERF_TESTS         "Build performance tests"                     OFF
+OCV_OPTION(BUILD_TESTS              "Build accuracy & regression tests"           OFF
 OCV_OPTION(BUILD_WITH_DEBUG_INFO    "Include debug info into release binaries ('OFF' means default settings)" OFF )
 OCV_OPTION(BUILD_WITH_STATIC_CRT    "Enables use of statically linked CRT for statically linked OpenCV" ON IF MSVC )
 OCV_OPTION(BUILD_WITH_DYNAMIC_IPP   "Enables dynamic linking of IPP (only for standalone IPP)" OFF )
@@ -474,7 +474,7 @@ OCV_OPTION(INSTALL_BIN_EXAMPLES     "Install prebuilt examples" WIN32 IF BUILD_E
 OCV_OPTION(INSTALL_C_EXAMPLES       "Install C examples"        OFF )
 OCV_OPTION(INSTALL_PYTHON_EXAMPLES  "Install Python examples"   OFF )
 OCV_OPTION(INSTALL_ANDROID_EXAMPLES "Install Android examples"  OFF IF ANDROID )
-OCV_OPTION(INSTALL_TO_MANGLED_PATHS "Enables mangled install paths, that help with side by side installs." OFF IF (UNIX AND NOT ANDROID AND NOT APPLE_FRAMEWORK AND BUILD_SHARED_LIBS) )
+OCV_OPTION(INSTALL_TO_MANGLED_PATHS "Enables mangled install paths, that help with side by side installs." ON IF (UNIX AND NOT ANDROID AND NOT APPLE_FRAMEWORK AND BUILD_SHARED_LIBS) )
 OCV_OPTION(INSTALL_TESTS            "Install accuracy and performance test binaries and test data" OFF)
 
 # OpenCV build options
@@ -583,7 +583,7 @@ ocv_include_directories(${OPENCV_CONFIG_FILE_INCLUDE_DIR})
 # ----------------------------------------------------------------------------
 #  Path for additional modules
 # ----------------------------------------------------------------------------
-set(OPENCV_EXTRA_MODULES_PATH "" CACHE PATH "Where to look for additional OpenCV modules (can be ;-separated list of paths)")
+set(OPENCV_EXTRA_MODULES_PATH "${CMAKE_CURRENT_SOURCE_DIR}/opencv_contrib/" CACHE PATH "Where to look for additional OpenCV modules (can be ;-separated list of paths)")
 
 # ----------------------------------------------------------------------------
 #  Autodetect if we are in a GIT repository
@@ -1664,3 +1664,4 @@ include(cmake/OpenCVPackaging.cmake)
 # This should be the last command
 ocv_cmake_dump_vars("" TOFILE "CMakeVars.txt")
 ocv_cmake_eval(DEBUG_POST ONCE)
+install(FILES package.xml DESTINATION share/opencv3)
