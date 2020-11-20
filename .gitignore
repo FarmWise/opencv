@@ -1,6 +1,6 @@
 # ignore dot files/directories
-.*
 !.gitignore
+.clang-format
 
 *.autosave
 *.pyc

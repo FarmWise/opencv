@@ -1,0 +1,29 @@
+steps:
+  - label: 'Build Debian'
+    key: "debian"
+    commands:
+      - make debian
+    plugins:
+      - docker-login#v2.0.1:
+          username: farmwisesvc
+          password-env: FARMWISE_SVC_PASSWORD
+      - farmwise/docker-compose#v3.5.0-2:
+          run: app
+          config: .buildkite/docker-compose.yml
+    artifact_paths:
+      - "*.deb"
+  - wait
+  - label: 'Upload debian to apt.farmwise.io'
+    branches: master
+    plugins:
+      - docker-login#v2.0.1:
+          username: farmwisesvc
+          password-env: FARMWISE_SVC_PASSWORD
+      - farmwise/docker-compose#v3.5.0-2:
+          run: app
+          config: .buildkite/docker-compose.yml
+          mount-buildkite-agent: true
+    command: |
+      buildkite-agent artifact download *.deb .
+      farmwise_upload_deb opencv4 .
+      farmwise_annotate_build .
