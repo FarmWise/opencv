@@ -1,0 +1,12 @@
+version: '2'
+services:
+  app:
+    image: farmwise/thirdparty:latest
+    working_dir: /app/source
+    volumes:
+      - ..:/app/source
+  app-dev:
+    image: farmwise/thirdparty:dev
+    working_dir: /app/source
+    volumes:
+      - ..:/app/source

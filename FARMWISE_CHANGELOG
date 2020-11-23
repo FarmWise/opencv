@@ -1,0 +1,5 @@
+ros-noetic-libopencv-dev (4.5.0-0farmwise) focal; urgency=high
+
+  * Migrate package to noetic; vendor opencv_contrib and build non-free xfeatures2d algorithms like SURF
+
+ -- Alex Carrillo <alex.carrillo@farmwise.io>  Fri, 20 Nov 2020 00:00:00 -0000

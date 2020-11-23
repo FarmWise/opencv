@@ -1,6 +1,6 @@
 # ignore dot files/directories
-.*
 !.gitignore
+.clang-format
 
 *.autosave
 *.pyc
@@ -25,3 +25,5 @@ build
 node_modules
 CMakeSettings.json
 xcuserdata/
+debian
+obj-x86_64-linux-gnu
